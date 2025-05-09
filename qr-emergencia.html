@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Datos de Emergencia</title>
+  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 10px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #qrCode {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Formulario de Datos de Emergencia</h1>
+  <form id="emergencyForm">
+    <label for="fullName">Nombre completo:</label>
+    <input type="text" id="fullName" placeholder="Nombre completo" required>
+
+    <label for="rut">RUT:</label>
+    <input type="text" id="rut" placeholder="RUT" required>
+
+    <label for="dob">Edad o Fecha de nacimiento:</label>
+    <input type="date" id="dob" required>
+
+    <label for="bloodType">Grupo sanguíneo:</label>
+    <input type="text" id="bloodType" placeholder="Grupo sanguíneo" required>
+
+    <label for="allergies">Alergias importantes:</label>
+    <input type="text" id="allergies" placeholder="Alergias importantes" required>
+
+    <label for="conditions">Enfermedades o condiciones médicas:</label>
+    <input type="text" id="conditions" placeholder="Enfermedades o condiciones médicas" required>
+
+    <label for="medications">Medicamentos que tomas regularmente:</label>
+    <input type="text" id="medications" placeholder="Medicamentos que tomas regularmente" required>
+
+    <label for="address">Dirección:</label>
+    <input type="text" id="address" placeholder="Dirección" required>
+
+    <button type="submit">Generar QR</button>
+  </form>
+
+  <div id="qrCode"></div>
+
+  <script>
+    document.getElementById('emergencyForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Obtener los valores de los campos
+      const fullName = document.getElementById('fullName').value;
+      const rut = document.getElementById('rut').value;
+      const dob = document.getElementById('dob').value;
+      const bloodType = document.getElementById('bloodType').value;
+      const allergies = document.getElementById('allergies').value;
+      const conditions = document.getElementById('conditions').value;
+      const medications = document.getElementById('medications').value;
+      const address = document.getElementById('address').value;
+
+      // Crear un objeto con los datos de emergencia
+      const emergencyData = {
+        fullName,
+        rut,
+        dob,
+        bloodType,
+        allergies,
+        conditions,
+        medications,
+        address
+      };
+
+      // Convertir los datos a formato JSON
+      const jsonData = JSON.stringify(emergencyData);
+
+      // Generar el código QR con los datos
+      const qrCode = new QRCode(document.getElementById("qrCode"), {
+        text: jsonData,
+        width: 128,
+        height: 128
+      });
+    });
+  </script>
+
+</body>
+</html>
